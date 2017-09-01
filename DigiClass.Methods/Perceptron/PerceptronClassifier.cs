@@ -68,7 +68,7 @@ namespace DigiClass.Methods.Perceptron
         /// <param name="trainingData">Dane uczące.</param>
         /// <param name="ct">Token pozwalający przerwać proces uczenia poprzez sygnał z zewnątrz.</param>
         public void Train(
-            IList<IDataPoint> trainingData,
+            IEnumerable<IDataPoint> trainingData,
             CancellationToken ct)
         {
             for (var i = 1;; i++)

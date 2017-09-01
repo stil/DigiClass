@@ -22,7 +22,7 @@ namespace DigiClass.Methods
         /// <param name="trainingData">Training data.</param>
         /// <param name="cancellationToken">Training cancellation token.</param>
         void Train(
-            IList<IDataPoint> trainingData,
+            IEnumerable<IDataPoint> trainingData,
             CancellationToken cancellationToken);
 
         /// <summary>
