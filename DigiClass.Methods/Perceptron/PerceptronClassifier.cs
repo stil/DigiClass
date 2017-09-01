@@ -20,11 +20,14 @@ namespace DigiClass.Methods.Perceptron
         /// <param name="batchSize">Samples batch size.</param>
         public PerceptronClassifier(PerceptronModel model, double learningRate, int batchSize)
         {
-            Model = model;
+            Model = model ?? throw new ArgumentNullException(nameof(model));
             LearningRate = learningRate;
             BatchSize = batchSize;
         }
 
+        /// <summary>
+        ///     Perceptron model.
+        /// </summary>
         public PerceptronModel Model { get; }
 
         /// <summary>
