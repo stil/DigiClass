@@ -1,0 +1,166 @@
+﻿<Window x:Class="DigiClass.Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:demo="clr-namespace:DigiClass.Demo"
+        mc:Ignorable="d"
+        Title="MainWindow" Width="600" SizeToContent="Height"
+        TextOptions.TextFormattingMode="Display" d:DataContext="{d:DesignInstance demo:MainWindowModel}"
+        Cursor="{Binding Cursor}">
+    <TabControl Margin="10">
+        <TabItem Header="Training" Padding="6,4">
+            <StackPanel Margin="10" Orientation="Vertical">
+                <GroupBox Header="Data set" Padding="5">
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label IsEnabled="{Binding TrainingDataLinkEnabled}">Download MNIST training data</Label>
+                            <Button Margin="6,0,0,0" Command="{Binding TrainingDataDownload}" Grid.Column="1"
+                                    Padding="6,0">
+                                Download from yann.lecun.com/exdb/mnist/
+                            </Button>
+                        </Grid>
+
+                        <Grid Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="15" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock LineHeight="20" Padding="4,0">
+                                Training set images: <TextBlock Text="{Binding TrainImagesFileStatus}" />
+                                <LineBreak />
+                                Training set labels: <TextBlock Text="{Binding TrainLabelsFileStatus}" />
+                            </TextBlock>
+
+                            <TextBlock Grid.Column="2" LineHeight="20" Padding="4,0">
+                                Test set images: <TextBlock Text="{Binding TestImagesFileStatus}" /><LineBreak />
+                                Test set labels: <TextBlock Text="{Binding TestLabelsFileStatus}" />
+                            </TextBlock>
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Perceptron model" Padding="5" Margin="0,6,0,0">
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label HorizontalContentAlignment="Right">First hidden layer size:</Label>
+                                <TextBox Padding="4,0" VerticalContentAlignment="Center"
+                                         HorizontalContentAlignment="Right" Grid.Column="1" Margin="6,0,0,0"
+                                         Text="{Binding FirstHiddenLayerSize}" />
+                            </Grid>
+
+                            <Grid Grid.Column="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label HorizontalContentAlignment="Right">Second hidden layer size:</Label>
+                                <TextBox Padding="4,0" VerticalContentAlignment="Center"
+                                         HorizontalContentAlignment="Right" Grid.Column="1" Margin="6,0,0,0"
+                                         Text="{Binding SecondHiddenLayerSize}" />
+                            </Grid>
+
+
+                        </Grid>
+
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Training process" Padding="5" Margin="0,6,0,0">
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label HorizontalContentAlignment="Right">Learning rate:</Label>
+                                <TextBox Padding="4,0" VerticalContentAlignment="Center"
+                                         HorizontalContentAlignment="Right" Grid.Column="1" Margin="6,0,0,0"
+                                         Text="{Binding LearningRate}" />
+                            </Grid>
+
+                            <Grid Grid.Column="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label HorizontalContentAlignment="Right">Batch size:</Label>
+                                <TextBox Padding="4,0" VerticalContentAlignment="Center"
+                                         HorizontalContentAlignment="Right" Grid.Column="1" Margin="6,0,0,0"
+                                         Text="{Binding BatchSize}" />
+                            </Grid>
+
+                            <Grid Grid.Column="4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label HorizontalContentAlignment="Right">Iterations:</Label>
+                                <TextBox Padding="4,0" VerticalContentAlignment="Center"
+                                         HorizontalContentAlignment="Right" Grid.Column="1" Margin="6,0,0,0"
+                                         Text="{Binding Iterations}" />
+                            </Grid>
+
+
+
+
+                        </Grid>
+                        <Button Margin="0,12,0,0" Padding="0,4"
+                                Command="{Binding StartTraining}"
+                                Content="Train from scratch" />
+
+                        <TextBox AcceptsReturn="True" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                 IsReadOnly="True"
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                 ScrollViewer.CanContentScroll="True" Height="100" Margin="0,12,0,0"
+                                 Padding="4"
+                                 Text="{Binding TrainLog}" />
+
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Recognition" Padding="6,4" IsEnabled="{Binding RecognitionTabIsEnabled}">
+            <StackPanel Orientation="Vertical" Margin="10">
+                <InkCanvas Name="InkCanvas1" Height="300" Width="300"
+                           Background="{Binding InkCanvasBackground}"
+                           Strokes="{Binding StrokeCollection}" />
+                <TextBlock Margin="0,6,0,0" Text="{Binding DigitGuess}" />
+                <Button Margin="0,6,0,0" Padding="0,4" Command="{Binding ResetDrawing}">Reset drawing</Button>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
+
+</Window>
