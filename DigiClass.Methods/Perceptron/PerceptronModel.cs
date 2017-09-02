@@ -22,7 +22,7 @@ namespace DigiClass.Methods.Perceptron
             // zawierający wartość progową pobudzenia kolejnych perceptronów.
             // Wartości progowe są inicjowane losowymi wartościami z rozkładu normalnego.
             Biases = LayerSizes.Skip(1).Select(
-                y => Matrix<double>.Build.Random(y, 1, dist)
+                y => Matrix<float>.Build.Random(y, 1, dist)
             ).ToList();
 
             // Dla każdej z warstw sieci buduje macierz zawierającą wagi każdego z kolejnych perceptronów.
@@ -30,7 +30,7 @@ namespace DigiClass.Methods.Perceptron
             // reprezentuje kolejny perceptron danej warstwy.
             // Wagi są inicjowane losowymi wartościami z rozkładu normalnego.
             Weights = LayerSizes.Take(LayerSizes.Count - 1).Zip(LayerSizes.Skip(1),
-                (x, y) => Matrix<double>.Build.Random(y, x, dist) / Math.Sqrt(x)
+                (x, y) => Matrix<float>.Build.Random(y, x, dist) / (float) Math.Sqrt(x)
             ).ToList();
         }
 
@@ -39,8 +39,8 @@ namespace DigiClass.Methods.Perceptron
         /// </summary>
         public PerceptronModel(
             IEnumerable<int> layerSizes,
-            IEnumerable<Matrix<double>> biases,
-            IEnumerable<Matrix<double>> weights)
+            IEnumerable<Matrix<float>> biases,
+            IEnumerable<Matrix<float>> weights)
         {
             LayerSizes = layerSizes.ToList();
             Biases = biases.ToList();
@@ -56,11 +56,11 @@ namespace DigiClass.Methods.Perceptron
         /// <summary>
         ///     Lista wektorów kolumnowych zawierający progi pobudzenia dla każdego neuronu w danej warstwie.
         /// </summary>
-        public List<Matrix<double>> Biases { get; }
+        public List<Matrix<float>> Biases { get; }
 
         /// <summary>
         ///     Macierze wag sygnałów wejściowych perceptronów dla każdej warstwy sieci.
         /// </summary>
-        public List<Matrix<double>> Weights { get; }
+        public List<Matrix<float>> Weights { get; }
     }
 }

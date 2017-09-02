@@ -37,21 +37,21 @@ namespace DigiClass.Methods.Perceptron
             var sizes = doc.Root.Descendants("LayerSizes").First().Value.Split(';').Select(int.Parse).ToArray();
 
             var biases = doc.Root.Descendants("Biases").Descendants("Bias").Select(b =>
-                Matrix<double>.Build.DenseOfColumnArrays(
+                Matrix<float>.Build.DenseOfColumnArrays(
                     b.Descendants("Column").Select(col =>
-                        col.Value.Split(';').Select(d => double.Parse(d, CultureInfo.InvariantCulture)).ToArray())
+                        col.Value.Split(';').Select(d => float.Parse(d, CultureInfo.InvariantCulture)).ToArray())
                 )).ToList();
 
             var weights = doc.Root.Descendants("Weights").Descendants("Weight").Select(b =>
-                Matrix<double>.Build.DenseOfColumnArrays(
+                Matrix<float>.Build.DenseOfColumnArrays(
                     b.Descendants("Column").Select(col =>
-                        col.Value.Split(';').Select(d => double.Parse(d, CultureInfo.InvariantCulture)).ToArray())
+                        col.Value.Split(';').Select(d => float.Parse(d, CultureInfo.InvariantCulture)).ToArray())
                 )).ToList();
 
             return new PerceptronModel(sizes, biases, weights);
         }
 
-        private static IEnumerable<XElement> Serialize(Matrix<double> matrix)
+        private static IEnumerable<XElement> Serialize(Matrix<float> matrix)
         {
             return matrix.ToColumnArrays().Select(column =>
             {

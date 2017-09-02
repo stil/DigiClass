@@ -29,6 +29,6 @@ namespace DigiClass.Methods
         ///     Classifies given input with trained model.
         /// </summary>
         /// <param name="input">Input vector.</param>
-        Vector<double> Classify(Vector<double> input);
+        Vector<float> Classify(Vector<float> input);
     }
 }

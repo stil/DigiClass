@@ -10,24 +10,24 @@ namespace DigiClass.Methods
         /// <summary>
         ///     Wektor reprezentujący zestaw wartości wejściowych.
         /// </summary>
-        Vector<double> Input { get; }
+        Vector<float> Input { get; }
 
         /// <summary>
         ///     Wektor  reprezentujący zestaw wartości wyjściowych.
         /// </summary>
-        Vector<double> Output { get; }
+        Vector<float> Output { get; }
     }
 
     public class DataPoint : IDataPoint
     {
-        public DataPoint(Vector<double> input, Vector<double> output)
+        public DataPoint(Vector<float> input, Vector<float> output)
         {
             Input = input;
             Output = output;
         }
 
-        public Vector<double> Input { get; }
-        public Vector<double> Output { get; }
+        public Vector<float> Input { get; }
+        public Vector<float> Output { get; }
 
         /// <summary>
         ///     Implementuje konwersję do ciągu znaków (x_0, x_1, ..., x_k) → (y_0, y_1, ..., y_m).

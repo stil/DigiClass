@@ -14,9 +14,10 @@ namespace DigiClass.Methods.Extensions
         /// </summary>
         /// <param name="input">Macierz wejściowa.</param>
         /// <returns>Macierz wyjściowa.</returns>
-        public static Matrix<double> Sigmoid(this Matrix<double> input)
+        public static Matrix<float> Sigmoid(this Matrix<float> input)
         {
-            return input.Map(SpecialFunctions.Logistic);
+            return input.Map(f => (float) SpecialFunctions.Logistic(f));
+            //return input.Map(f => SpecialFunctions.Logistic((float)f));
         }
 
         /// <summary>
@@ -25,7 +26,7 @@ namespace DigiClass.Methods.Extensions
         /// </summary>
         /// <param name="input">Macierz wejściowa.</param>
         /// <returns>Macierz wyjściowa.</returns>
-        public static Matrix<double> SigmoidPrime(this Matrix<double> input)
+        public static Matrix<float> SigmoidPrime(this Matrix<float> input)
         {
             var sig = Sigmoid(input);
             return sig.PointwiseMultiply(sig.SubtractFrom(1));
@@ -36,9 +37,9 @@ namespace DigiClass.Methods.Extensions
         /// </summary>
         /// <param name="source">Macierz której wymiary mają zostać użyte.</param>
         /// <returns>Nowa wyzerowana macierz.</returns>
-        public static Matrix<double> CreateMatrixOfSameShape(this Matrix<double> source)
+        public static Matrix<float> CreateMatrixOfSameShape(this Matrix<float> source)
         {
-            return Matrix<double>.Build.Dense(source.RowCount, source.ColumnCount, 0);
+            return Matrix<float>.Build.Dense(source.RowCount, source.ColumnCount, 0);
         }
 
         /// <summary>

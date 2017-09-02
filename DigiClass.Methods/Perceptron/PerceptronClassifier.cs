@@ -18,7 +18,7 @@ namespace DigiClass.Methods.Perceptron
         /// <param name="model">Perceptron model.</param>
         /// <param name="learningRate">Learning rate.</param>
         /// <param name="batchSize">Samples batch size.</param>
-        public PerceptronClassifier(PerceptronModel model, double learningRate, int batchSize)
+        public PerceptronClassifier(PerceptronModel model, float learningRate, int batchSize)
         {
             Model = model ?? throw new ArgumentNullException(nameof(model));
             LearningRate = learningRate;
@@ -33,7 +33,7 @@ namespace DigiClass.Methods.Perceptron
         /// <summary>
         ///     Perceptron learning rate.
         /// </summary>
-        public double LearningRate { get; }
+        public float LearningRate { get; }
 
         /// <summary>
         ///     Batch size.
@@ -50,7 +50,7 @@ namespace DigiClass.Methods.Perceptron
         ///     Wykonuje propagację wprzód, z wejścia do wyjścia.
         /// </summary>
         /// <param name="input">Wektor wejściowy.</param>
-        public Vector<double> Classify(Vector<double> input)
+        public Vector<float> Classify(Vector<float> input)
         {
             // Przekształca wektor wejściowy do macierzy kolumnowej.
             var output = input.ToColumnMatrix();
@@ -59,7 +59,7 @@ namespace DigiClass.Methods.Perceptron
             Model.Biases.ZipForEach(Model.Weights, (b, w) => { output = (w * output + b).Sigmoid(); });
 
             // Przekształca macierz kolumnową z powrotem do wektora.
-            return Vector<double>.Build.Dense(output.Enumerate().ToArray());
+            return Vector<float>.Build.Dense(output.Enumerate().ToArray());
         }
 
         /// <summary>
@@ -122,23 +122,23 @@ namespace DigiClass.Methods.Perceptron
             }
 
             // Korekta wartości progowych i wag uwzględniając współczynnik uczenia.
-            Model.Biases.ZipForEach(nablaB, (b, nabla) => b.Subtract(eta / miniBatchSize * nabla, b));
-            Model.Weights.ZipForEach(nablaW, (w, nabla) => w.Subtract(eta / miniBatchSize * nabla, w));
+            Model.Biases.ZipForEach(nablaB, (b, nabla) => b.Subtract((float)(eta / miniBatchSize) * nabla, b));
+            Model.Weights.ZipForEach(nablaW, (w, nabla) => w.Subtract((float)(eta / miniBatchSize) * nabla, w));
         }
 
         /// <summary>
         ///     Realizuje propagację wsteczną.
         /// </summary>
         private void Backpropagation(IDataPoint dataPoint,
-            IList<Matrix<double>> deltaNablaB,
-            IList<Matrix<double>> deltaNablaW)
+            IList<Matrix<float>> deltaNablaB,
+            IList<Matrix<float>> deltaNablaW)
         {
             // Ustawienie wejść.
             var a = dataPoint.Input.ToColumnMatrix(); // Ustawienie "aktywacji" warstwy wejściowej.
-            var aLayers = new List<Matrix<double>> {a}; // Zapis aktywacji warstwy wejściowej.
+            var aLayers = new List<Matrix<float>> {a}; // Zapis aktywacji warstwy wejściowej.
 
             // Propagacja wprzód.
-            var zLayers = new List<Matrix<double>>(); // Lista pobudzeń każdej z warstw sieci.
+            var zLayers = new List<Matrix<float>>(); // Lista pobudzeń każdej z warstw sieci.
             for (var i = 0; i < Model.LayerSizes.Count - 1; i++)
             {
                 var z = Model.Weights[i] * a; // z = w*a
