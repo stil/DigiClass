@@ -141,7 +141,9 @@ namespace DigiClass.Methods.Perceptron
             var zLayers = new List<Matrix<double>>(); // Lista pobudzeń każdej z warstw sieci.
             for (var i = 0; i < Model.LayerSizes.Count - 1; i++)
             {
-                var z = Model.Weights[i] * a + Model.Biases[i]; // z = w*a + b
+                var z = Model.Weights[i] * a; // z = w*a
+                z.Add(Model.Biases[i], z); // z = w*a + b
+                
                 zLayers.Add(z); // Dodanie pobudzeń bieżącej warstwy do listy.
                 a = z.Sigmoid(); // a=sigma(z)
                 aLayers.Add(a); // Dodanie aktywacji bieżącej warstwy do listy.
@@ -162,7 +164,7 @@ namespace DigiClass.Methods.Perceptron
                     .PointwiseMultiply(zLayers[bigL].SigmoidPrime());
 
                 deltaNablaB[bigL] = delta;
-                deltaNablaW[bigL] = delta.TransposeAndMultiply(aLayers[bigL]);
+                delta.TransposeAndMultiply(aLayers[bigL], deltaNablaW[bigL]); // Avoid creating new object.
             }
         }
     }
